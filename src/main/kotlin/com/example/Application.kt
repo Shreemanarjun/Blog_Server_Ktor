@@ -19,7 +19,6 @@ fun Application.module() {
     configureSerialization()
     configureRouting()
     configureSwagger()
-    configureOpenAPI()
 }
 
 
