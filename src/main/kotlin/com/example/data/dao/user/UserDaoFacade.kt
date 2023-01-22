@@ -1,13 +1,13 @@
-package com.example.data.dao
+package com.example.data.dao.user
 
 import com.example.data.UserRequest
-import com.example.data.table.User
+import com.example.data.table.user.User
 
 interface UserDaoFacade {
     suspend fun getAllUser(): List<User>
-    suspend fun getUser(id: Int): User?
+    suspend fun isUserAvailable(id: Int): User?
 
-    suspend fun getUser(user:UserRequest ):Boolean
+    suspend fun isUserAvailable(user:UserRequest ):Boolean
     suspend fun addNewUser(username: String, password: String): User?
     suspend fun deleteUser(id: Int): Boolean
 }

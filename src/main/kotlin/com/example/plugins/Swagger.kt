@@ -5,8 +5,14 @@ import io.github.smiley4.ktorswaggerui.dsl.AuthScheme
 import io.github.smiley4.ktorswaggerui.dsl.AuthType
 import io.github.smiley4.ktorswaggerui.dsl.SwaggerUiSyntaxHighlight
 import io.ktor.server.application.*
+import io.ktor.server.config.*
+import io.ktor.server.engine.*
 
-fun Application.configureSwagger(){
+fun Application.configureSwagger() {
+    val host = (environment).config.host
+    val port = environment.config.port
+
+    println("$host $port")
     install(SwaggerUI) {
         swagger {
             forwardRoot = true
@@ -34,7 +40,7 @@ fun Application.configureSwagger(){
             }
         }
         server {
-            url = "http://localhost:8080"
+            url = "http://$host:$port"
             description = "Development server"
         }
         server {

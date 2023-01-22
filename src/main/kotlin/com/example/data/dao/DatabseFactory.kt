@@ -1,6 +1,7 @@
 package com.example.data.dao
 
-import com.example.data.table.UsersTable
+import com.example.data.table.token.TokenTable
+import com.example.data.table.user.UsersTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -14,6 +15,7 @@ object DatabaseFactory {
         val database = Database.connect(jdbcURL, driverClassName)
         transaction(database) {
             SchemaUtils.create(UsersTable)
+            SchemaUtils.create(TokenTable)
         }
     }
 

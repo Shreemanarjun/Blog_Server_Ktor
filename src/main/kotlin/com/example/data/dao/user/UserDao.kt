@@ -1,14 +1,14 @@
-package com.example.data.dao
+package com.example.data.dao.user
 
 import com.example.data.UserRequest
 import com.example.data.dao.DatabaseFactory.dbQuery
-import com.example.data.table.User
-import com.example.data.table.UsersTable
+import com.example.data.table.user.User
+import com.example.data.table.user.UsersTable
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
- class UserDAOFacadeImpl : UserDaoFacade {
+class UserDAOFacadeImpl : UserDaoFacade {
 
     private fun resultRowToArticle(row: ResultRow) = User(
         id = row[UsersTable.id],
@@ -18,13 +18,13 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
     override suspend fun getAllUser(): List<User> =dbQuery {
         UsersTable.selectAll().map(::resultRowToArticle)
     }
-    override suspend fun getUser(user:UserRequest ):Boolean=dbQuery {
+    override suspend fun isUserAvailable(user:UserRequest ):Boolean=dbQuery {
       UsersTable
           .select { (UsersTable.username eq user.username) and (UsersTable.password eq user.password)}
           .map(::resultRowToArticle)
           .isNotEmpty()
   }
-    override suspend fun getUser(id: Int): User? = dbQuery {
+    override suspend fun isUserAvailable(id: Int): User? = dbQuery {
         UsersTable
             .select { UsersTable.id eq id }
             .map(::resultRowToArticle)
@@ -47,6 +47,7 @@ val userDao: UserDaoFacade = UserDAOFacadeImpl().apply {
     runBlocking {
         if(getAllUser().isEmpty()) {
             addNewUser(username = "Arjun", password = "password")
+
         }
     }
 }

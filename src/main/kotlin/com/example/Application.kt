@@ -10,6 +10,7 @@ fun main(args: Array<String>): Unit =
 @Suppress("unused")
 fun Application.module() {
     DatabaseFactory.init()
+    configureRequestValidation()
     configureAutoHeadResponse()
     configureCORS()
     configureStatusPage()
@@ -20,3 +21,5 @@ fun Application.module() {
     configureSwagger()
     configureOpenAPI()
 }
+
+
