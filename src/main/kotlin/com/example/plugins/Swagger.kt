@@ -41,7 +41,7 @@ fun Application.configureSwagger() {
         }
         if (envHost!=null){
             server {
-                url = envHost
+                url = "https://${envHost}"
                 description = "Development server"
             }
         }
