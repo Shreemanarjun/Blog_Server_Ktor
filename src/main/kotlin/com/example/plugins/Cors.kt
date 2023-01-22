@@ -11,11 +11,26 @@ fun Application.configureCORS(){
         allowMethod(HttpMethod.Put)
         allowMethod(HttpMethod.Delete)
         allowMethod(HttpMethod.Patch)
+        allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
+        allowCredentials=true
         allowHeader("MyCustomHeader")
+        allowOrigins {
+            true
+        }
+allowHeaders { true }
+        allowSameOrigin=true
         val envHost=System.getenv("RAILWAY_STATIC_URL")
-        val url = "https://${envHost}"
-        hosts.add(url)
+        if (envHost!=null){
+            val url = "https://${envHost}"
+            allowHost(envHost)
+            allowHost("$envHost")
+            allowHost("$envHost:8080")
+            allowHost("$envHost", subDomains = listOf("en", "de", "es"))
+            allowHost("$envHost", schemes = listOf("http", "https"))
+            hosts.add(url)
+        }
+
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
 }
