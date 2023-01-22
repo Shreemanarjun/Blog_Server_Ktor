@@ -59,7 +59,7 @@ fun Routing.authRoutes() {
                 .withIssuer(this@authRoutes.environment?.config?.property("jwt.domain")?.getString())
                 .withClaim("username", user.username)
                 .withClaim("tokenType", "accessToken")
-                .withExpiresAt(Date(System.currentTimeMillis() + 30000 ))
+                .withExpiresAt(Date(System.currentTimeMillis() + 60000 ))
                 .sign(Algorithm.HMAC256("secret"))
             call.respond(MyToken(token = token))
         } else {
