@@ -10,7 +10,7 @@ import io.ktor.server.routing.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Routing.userRoute(){
+fun Routing.userRoute() {
     get("/name") {
         call.respondText("Hello World! Arjuns")
     }
@@ -24,8 +24,9 @@ fun Routing.userRoute(){
             val username = principal!!.payload.getClaim("username").asString()
             val expiresAt = principal.expiresAt?.time
 
-            val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
-
+            val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm:ss").apply {
+                timeZone = (TimeZone.getTimeZone("Asia/Kolkata"))
+            }
             val expiredTime = formatter.format(expiresAt?.let { it1 -> Date(it1) })
             val json = mapOf("expireAtDate" to expiredTime, "username" to username)
 
