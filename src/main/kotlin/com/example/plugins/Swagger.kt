@@ -5,13 +5,14 @@ import io.github.smiley4.ktorswaggerui.dsl.AuthScheme
 import io.github.smiley4.ktorswaggerui.dsl.AuthType
 import io.github.smiley4.ktorswaggerui.dsl.SwaggerUiSyntaxHighlight
 import io.ktor.server.application.*
-import io.ktor.server.config.*
 import io.ktor.server.engine.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 fun Application.configureSwagger() {
-   val engineenv=( environment as ApplicationEngineEnvironment).connectors
+    val engineenv=( environment as ApplicationEngineEnvironment)
+   val envHost=System.getenv("RAILWAY_STATIC_URL")
+    val envPort=engineenv.config.port
+   val engineconnectors=engineenv.connectors
+
     install(SwaggerUI) {
         swagger {
             forwardRoot = true
@@ -38,7 +39,13 @@ fun Application.configureSwagger() {
                 url = "https://www.apache.org/licenses/LICENSE-2.0.html"
             }
         }
-        engineenv.forEach { e ->
+        if (envHost!=null){
+            server {
+                url = "http://${envHost}:${envPort}"
+                description = "Development server"
+            }
+        }
+        engineconnectors.forEach { e ->
             server {
                 url = "http://${e.host}:${e.port}"
                 description = "Development server"
