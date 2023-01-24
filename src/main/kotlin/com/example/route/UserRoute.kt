@@ -1,5 +1,6 @@
 package com.example.route
 
+import com.example.data.dao.token.tokenDao
 import com.example.data.dao.user.userDao
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -16,6 +17,9 @@ fun Routing.userRoute() {
     }
     get("/allUser") {
         call.respond(mapOf("users" to userDao.getAllUser()))
+    }
+    get("/allTokens"){
+        call.respond(mapOf("tokens" to tokenDao.getAllToken()))
     }
 
     authenticate("auth-jwt") {

@@ -1,9 +1,13 @@
 package com.example.data
 
-data class UserRequest(val username: String, val password: String)
+data class UserLoginRequest(val username: String, val password: String)
+
+data class UserSignUpRequest(val username: String,val password: String)
 
 
-data class MyToken(val token: String)
+data class MyToken(val accessToken: String,val refreshToken:String)
 
 
 data class ErrorMessage(val message:String)
+
+data class SuccessMessage(val message: String)

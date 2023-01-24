@@ -1,6 +1,6 @@
 package com.example.data.dao.user
 
-import com.example.data.UserRequest
+import com.example.data.UserLoginRequest
 import com.example.data.dao.DatabaseFactory.dbQuery
 import com.example.data.table.user.User
 import com.example.data.table.user.UsersTable
@@ -18,12 +18,27 @@ class UserDAOFacadeImpl : UserDaoFacade {
     override suspend fun getAllUser(): List<User> =dbQuery {
         UsersTable.selectAll().map(::resultRowToArticle)
     }
-    override suspend fun isUserAvailable(user:UserRequest ):Boolean=dbQuery {
+    override suspend fun isUserAvailable(user:UserLoginRequest ):Boolean=dbQuery {
       UsersTable
           .select { (UsersTable.username eq user.username) and (UsersTable.password eq user.password)}
           .map(::resultRowToArticle)
           .isNotEmpty()
   }
+
+    override suspend fun getUser(user: UserLoginRequest): User? = dbQuery {
+        UsersTable
+            .select { (UsersTable.username eq user.username) and (UsersTable.password eq user.password)}
+            .map(::resultRowToArticle)
+            .singleOrNull()
+    }
+
+    override suspend fun getUser(username: String): User?= dbQuery {
+        UsersTable
+            .select { (UsersTable.username eq username) }
+            .map(::resultRowToArticle).firstOrNull()
+
+    }
+
     override suspend fun isUserAvailable(id: Int): User? = dbQuery {
         UsersTable
             .select { UsersTable.id eq id }

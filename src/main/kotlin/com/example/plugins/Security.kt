@@ -10,21 +10,24 @@ import io.ktor.server.response.*
 
 
 fun Application.configureSecurity() {
-
+    val jwtAudience = this@configureSecurity.environment.config.property("jwt.audience").getString()
+    val issuer = this@configureSecurity.environment.config.property("jwt.domain").getString()
+    val secret = this@configureSecurity.environment.config.property("jwt.secret").getString()
+    val myRealm = this@configureSecurity.environment.config.property("jwt.realm").getString()
     authentication {
         jwt("auth-jwt") {
-            val jwtAudience = this@configureSecurity.environment.config.property("jwt.audience").getString()
-            realm = this@configureSecurity.environment.config.property("jwt.realm").getString()
+            realm = myRealm
             verifier(
                 JWT
-                    .require(Algorithm.HMAC256("secret"))
+                    .require(Algorithm.HMAC256(secret))
                     .withAudience(jwtAudience)
-                    .withIssuer(this@configureSecurity.environment.config.property("jwt.domain").getString())
+                    .withIssuer(issuer)
                     .build()
             )
             validate {
                 return@validate if ((it.payload.getClaim("username")
-                        .asString() != "") && (it.payload.getClaim("tokenType").asString() == "accessToken")
+                            .asString() != "")&& (it.payload.getClaim("userid")
+                            .asString() != "") && (it.payload.getClaim("tokenType").asString() == "accessToken")
                 ) {
                     JWTPrincipal(it.payload)
                 } else {

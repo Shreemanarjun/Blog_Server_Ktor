@@ -30,7 +30,6 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-cors-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-openapi:$ktor_version")
     implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
     implementation ("io.github.smiley4:ktor-swagger-ui:1.0.2")
     implementation("org.slf4j:slf4j-simple:2.0.6")
@@ -48,7 +47,11 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
 
+
+
 tasks.getByName("build").finalizedBy("installDist")
+
+
 
 tasks.withType<Jar> {
     // Otherwise you'll get a "No main manifest attribute" error
