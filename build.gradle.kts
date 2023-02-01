@@ -6,7 +6,7 @@ val h2_version: String by project
 
 plugins {
     kotlin("jvm") version "1.8.0"
-    id("io.ktor.plugin") version "2.2.2"
+    id("io.ktor.plugin") version "2.2.3"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
 }
 
@@ -31,7 +31,7 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-cors-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
-    implementation ("io.github.smiley4:ktor-swagger-ui:1.0.2")
+    implementation ("io.github.smiley4:ktor-swagger-ui:1.1.0")
     implementation("org.slf4j:slf4j-simple:2.0.6")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
