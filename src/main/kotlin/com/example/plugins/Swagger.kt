@@ -1,27 +1,31 @@
 package com.example.plugins
 
+import com.example.data.ErrorMessage
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.dsl.AuthScheme
 import io.github.smiley4.ktorswaggerui.dsl.AuthType
+import io.github.smiley4.ktorswaggerui.dsl.SwaggerUiSort
 import io.github.smiley4.ktorswaggerui.dsl.SwaggerUiSyntaxHighlight
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 
 fun Application.configureSwagger() {
-    val engineenv=( environment as ApplicationEngineEnvironment)
-   val envHost=System.getenv("RAILWAY_STATIC_URL")
-    val envPort=engineenv.config.port
-   val engineconnectors=engineenv.connectors
+    val engineenv = (environment as ApplicationEngineEnvironment)
+    val envHost = System.getenv("RAILWAY_STATIC_URL")
+    val envPort = engineenv.config.port
+    val engineconnectors = engineenv.connectors
 
     install(SwaggerUI) {
+
         swagger {
             forwardRoot = true
             swaggerUrl = "swagger"
             // authentication = "auth-jwt"
             onlineSpecValidator()
+
             displayOperationId = true
             showTagFilterInput = true
-            //sort = SwaggerUiSort.HTTP_METHOD
+            sort = SwaggerUiSort.HTTP_METHOD
             syntaxHighlight = SwaggerUiSyntaxHighlight.MONOKAI
         }
         info {
@@ -39,7 +43,7 @@ fun Application.configureSwagger() {
                 url = "https://www.apache.org/licenses/LICENSE-2.0.html"
             }
         }
-        if (envHost!=null){
+        if (envHost != null) {
             server {
                 url = "https://${envHost}"
                 description = "Development server"
@@ -61,5 +65,15 @@ fun Application.configureSwagger() {
         }
         defaultSecuritySchemeName = "auth-jwt"
         schemasInComponentSection = true
+        schemasInComponentSection = true
+        examplesInComponentSection = true
+        defaultUnauthorizedResponse {
+            description = "Unauthorized Access"
+            body<ErrorMessage> {
+                example("Unauthorized Access", ErrorMessage(message = "Unauthorized Access"))
+            }
+        }
+
+
     }
 }
