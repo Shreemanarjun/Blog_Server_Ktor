@@ -2,7 +2,7 @@ package com.example.data.table.token
 
 import com.example.data.table.user.UsersTable
 import org.jetbrains.exposed.sql.Table
-
+data class Tokens(val tokens: List<Token>)
 
 data class Token(val id:Int?,val accessToken:String?,val refreshToken:String)
 
