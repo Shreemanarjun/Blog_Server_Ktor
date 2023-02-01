@@ -38,6 +38,29 @@ fun Application.configureSecurity() {
                 call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
             }
         }
+        jwt("auth-refresh-jwt") {
+            realm = myRealm
+            verifier(
+                JWT
+                    .require(Algorithm.HMAC256(secret))
+                    .withAudience(jwtAudience)
+                    .withIssuer(issuer)
+                    .build()
+            )
+            validate {
+                return@validate if ((it.payload.getClaim("username")
+                        .asString() != "")&& (it.payload.getClaim("userid")
+                        .asString() != "") && (it.payload.getClaim("tokenType").asString() == "refreshToken")
+                ) {
+                    JWTPrincipal(it.payload)
+                } else {
+                    null
+                }
+            }
+            challenge { _, _ ->
+                call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired.Please login Again")
+            }
+        }
     }
 
 }
