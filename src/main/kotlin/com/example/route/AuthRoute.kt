@@ -144,6 +144,7 @@ fun Routing.authRoutes() {
                 description = "Something went wrong"
                 body<ErrorMessage> {
                     example("Bad request", ErrorMessage(message = "Unable to Signup "))
+                    example("User name reserved",ErrorMessage(message = "Unable to signup due to username already reserved"))
                 }
             }
             HttpStatusCode.InternalServerError to {

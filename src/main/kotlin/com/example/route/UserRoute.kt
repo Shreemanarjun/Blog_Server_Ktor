@@ -1,7 +1,6 @@
 package com.example.route
 
 import com.example.data.ErrorMessage
-import com.example.data.MyToken
 import com.example.data.dao.token.tokenDao
 import com.example.data.dao.user.userDao
 import com.example.data.table.token.Tokens
@@ -46,7 +45,7 @@ fun Routing.userRoute() {
         response {
             HttpStatusCode.OK to {
                 description = "The operation was successful"
-                body<Tokens>(){
+                body<Tokens> {
                     example("tokens", value =Tokens(tokens = listOf()))
                 }
 
@@ -69,7 +68,7 @@ fun Routing.userRoute() {
             get(
                 "/hello",
                 {
-                    tags = listOf("user")
+                    tags = listOf("User")
 
                 },
             ) {
@@ -90,7 +89,7 @@ fun Routing.userRoute() {
             get(
                 "/ok",
                 {
-                    tags = listOf("user")
+                    tags = listOf("User")
                 },
             ) {
                 val principal = call.principal<JWTPrincipal>()
@@ -106,7 +105,7 @@ fun Routing.userRoute() {
             get(
                 "/refreshAccessToken",
                 {
-                    tags = listOf("user")
+                    tags = listOf("User")
 
                 },
             ) {
