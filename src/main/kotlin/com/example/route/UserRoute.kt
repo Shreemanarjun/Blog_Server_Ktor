@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun Routing.userRoute() {
+    val accessTokenExpiryTime=60000*30
     get("/name") {
         call.respondText("Hello World!")
     }
@@ -156,7 +157,7 @@ fun Routing.userRoute() {
                         .withClaim("userid", userid)
                         .withClaim("username", username)
                         .withClaim("tokenType", "accessToken")
-                        .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+                        .withExpiresAt(Date(System.currentTimeMillis() + accessTokenExpiryTime))
                         .sign(Algorithm.HMAC256(secret))
                     val isReplaced = tokenDao.replaceAccessToken(userId = userid, accessToken)
                     if (isReplaced) {

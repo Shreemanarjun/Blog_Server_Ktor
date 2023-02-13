@@ -19,6 +19,8 @@ fun Routing.authRoutes() {
     val audience = this@authRoutes.environment?.config?.property("jwt.audience")?.getString()
     val issuer = this@authRoutes.environment?.config?.property("jwt.domain")?.getString()
     val secret = this@authRoutes.environment?.config?.property("jwt.secret")?.getString()
+    val accessTokenExpiryTime=60000*30
+    val refreshTokenExpiryTime=60000 * 60*24
     post(
         "/login",
         {
@@ -71,7 +73,7 @@ fun Routing.authRoutes() {
                             .withClaim("userid", user.id)
                             .withClaim("username", userLoginRequest.username)
                             .withClaim("tokenType", "accessToken")
-                            .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+                            .withExpiresAt(Date(System.currentTimeMillis() + accessTokenExpiryTime))
                             .sign(Algorithm.HMAC256(secret))
                         val refreshToken = JWT.create()
                             .withAudience(audience)
@@ -79,7 +81,7 @@ fun Routing.authRoutes() {
                             .withClaim("userid", user.id)
                             .withClaim("username", userLoginRequest.username)
                             .withClaim("tokenType", "refreshToken")
-                            .withExpiresAt(Date(System.currentTimeMillis() + 60000 * 30))
+                            .withExpiresAt(Date(System.currentTimeMillis() +refreshTokenExpiryTime))
                             .sign(Algorithm.HMAC256(secret))
                         tokenDao.addToken(Token(id = user.id, accessToken = accessToken, refreshToken = refreshToken))
                         call.respond(MyToken(accessToken = accessToken, refreshToken = refreshToken))
@@ -93,7 +95,7 @@ fun Routing.authRoutes() {
                                     .withClaim("userid", user.id)
                                     .withClaim("username", userLoginRequest.username)
                                     .withClaim("tokenType", "accessToken")
-                                    .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+                                    .withExpiresAt(Date(System.currentTimeMillis() + accessTokenExpiryTime))
                                     .sign(Algorithm.HMAC256(secret))
                                 val refreshToken = JWT.create()
                                     .withAudience(audience)
@@ -101,7 +103,7 @@ fun Routing.authRoutes() {
                                     .withClaim("userid", user.id)
                                     .withClaim("username", userLoginRequest.username)
                                     .withClaim("tokenType", "refreshToken")
-                                    .withExpiresAt(Date(System.currentTimeMillis() + 60000 * 30))
+                                    .withExpiresAt(Date(System.currentTimeMillis() + refreshTokenExpiryTime))
                                     .sign(Algorithm.HMAC256(secret))
                                 tokenDao.addToken(Token(id = user.id, accessToken = accessToken, refreshToken = refreshToken))
                                 call.respond(MyToken(accessToken = accessToken, refreshToken = refreshToken))
