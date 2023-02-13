@@ -1,5 +1,6 @@
 package com.example.data.dao
 
+import com.example.data.table.blog.BlogTable
 import com.example.data.table.token.TokenTable
 import com.example.data.table.user.UsersTable
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,7 @@ object DatabaseFactory {
         transaction(database) {
             SchemaUtils.create(UsersTable)
             SchemaUtils.create(TokenTable)
+            SchemaUtils.create(BlogTable)
         }
     }
 

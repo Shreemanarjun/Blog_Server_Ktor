@@ -7,7 +7,10 @@ enum class TokenType{
 }
 
 interface TokenDaoFacade {
+    suspend fun isRefreshTokenAvailable(userID:Int,refreshToken:String):Boolean
     suspend fun getAllToken():List<Token>
+
+    suspend fun getTokens(userId: Int):Token?
 
     suspend fun addToken(token: Token):Boolean
 

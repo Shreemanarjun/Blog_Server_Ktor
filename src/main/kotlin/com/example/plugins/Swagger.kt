@@ -49,6 +49,10 @@ fun Application.configureSwagger() {
                 description = "Development server"
             }
         }
+        server {
+            url = "https://${engineenv.config.host}:$envPort"
+            description = "Development server"
+        }
         engineconnectors.forEach { e ->
             server {
                 url = "http://${e.host}:${e.port}"

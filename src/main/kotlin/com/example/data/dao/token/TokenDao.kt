@@ -13,8 +13,16 @@ class TokenDaoFacadeImpl : TokenDaoFacade {
         refreshToken = row[TokenTable.refreshToken],
     )
 
+    override suspend fun isRefreshTokenAvailable(userID: Int, refreshToken: String):Boolean= dbQuery {
+        TokenTable.select { (TokenTable.userId eq userID) and (TokenTable.refreshToken eq refreshToken) }.map(::resultRowToArticle).isNotEmpty()
+    }
+
     override suspend fun getAllToken(): List<Token> = dbQuery {
         TokenTable.selectAll().map(::resultRowToArticle)
+    }
+
+    override suspend fun getTokens(userId: Int): Token?= dbQuery {
+        TokenTable.select(where =TokenTable.userId eq userId ).map(::resultRowToArticle).firstOrNull()
     }
 
     override suspend fun addToken(token: Token): Boolean = dbQuery {
@@ -32,6 +40,7 @@ class TokenDaoFacadeImpl : TokenDaoFacade {
         }
         updateStatement > 0
     }
+
 
     override suspend fun isTokenAvailable(userId: Int): Boolean = dbQuery {
         TokenTable.select { TokenTable.userId eq userId }.map(::resultRowToArticle).isNotEmpty()
