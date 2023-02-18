@@ -14,6 +14,7 @@ class BlogDaoImpl : BlogDaoFacade {
         id = row[BlogTable.id],
         userID = row[BlogTable.userId],
         title = row[BlogTable.blogTitle],
+        description=row[BlogTable.blogDescription],
         createdAt = row[BlogTable.createdAt].toHttpDateString(),
         updatedAt = row[BlogTable.updatedAt]?.toHttpDateString()
     )
@@ -22,10 +23,11 @@ class BlogDaoImpl : BlogDaoFacade {
         Blogs(blogs = BlogTable.select(where = BlogTable.userId eq userID).map(::resultRowToBlog))
     }
 
-    override suspend fun createBlog(userID: Int, title: String): Boolean = dbQuery {
+    override suspend fun createBlog(userID: Int, title: String,description:String): Boolean = dbQuery {
         val insertStatement = BlogTable.insert {
             it[userId] = userID
             it[blogTitle] = title
+            it[blogDescription]=description
             it[createdAt]=LocalDateTime.now()
             it[updatedAt]=null
         }
@@ -33,11 +35,11 @@ class BlogDaoImpl : BlogDaoFacade {
 
     }
 
-    override suspend fun updateBlog(userID: Int, blogId: Int, title: String): Boolean = dbQuery {
+    override suspend fun updateBlog(userID: Int, blogId: Int, title: String,description:String): Boolean = dbQuery {
         val updateStatement = BlogTable.update(where = { (BlogTable.userId eq userID) and (BlogTable.id eq blogId) }) {
             it[blogTitle] = title
+            it[blogDescription]=description
             it[updatedAt] = LocalDateTime.now()
-
         }
         updateStatement > 0
     }

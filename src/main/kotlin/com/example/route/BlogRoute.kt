@@ -15,8 +15,8 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-data class BlogRequest(val title: String)
-data class BlogUpdateRequest(val blogId: Int, val title: String)
+data class BlogRequest(val title: String,val description:String)
+data class BlogUpdateRequest(val blogId: Int, val title: String,val description:String)
 
 fun Routing.blogRoutes() {
     authenticate("auth-jwt") {
@@ -54,7 +54,7 @@ fun Routing.blogRoutes() {
                             description = "Blog Create Request"
                             required = true
 
-                            example("Blog 1", BlogRequest(title = "I am a blog")) {
+                            example("Blog 1", BlogRequest(title = "I am a blog",description="Description")) {
                                 description = "Example for blog request"
                                 summary = "Default Blog Request"
                             }
@@ -86,7 +86,7 @@ fun Routing.blogRoutes() {
                 principal!!.payload.getClaim("username").asString()
                 val userid = principal.payload.getClaim("userid").asInt()
                 val blogRequest = call.receive<BlogRequest>()
-                val isBlogCreated = blogDao.createBlog(userID = userid, title = blogRequest.title)
+                val isBlogCreated = blogDao.createBlog(userID = userid, title = blogRequest.title, description = blogRequest.description)
                 if (isBlogCreated) {
                     val blogs = blogDao.getBlogsByUser(userID = userid)
                     call.respond(blogs)
@@ -103,7 +103,7 @@ fun Routing.blogRoutes() {
                             description = "Blog update request"
                             required = true
 
-                            example("Blog Update", BlogUpdateRequest(blogId = 1, title = "Update1")) {
+                            example("Blog Update", BlogUpdateRequest(blogId = 1, title = "Update1",description="Description")) {
                                 description = "Example of Blog Update Request"
                                 summary = "Default Blog Update Request"
                             }
@@ -138,7 +138,8 @@ fun Routing.blogRoutes() {
                 val isBlogUpdated = blogDao.updateBlog(
                     userID = userid,
                     blogId = blogupdateRequest.blogId,
-                    title = blogupdateRequest.title
+                    title = blogupdateRequest.title,
+                    description = blogupdateRequest.description
                 )
                 if (isBlogUpdated) {
                     val blogs = blogDao.getBlogsByUser(userID = userid)
