@@ -62,12 +62,12 @@ fun Application.configureSwagger() {
 
 
 
-        securityScheme("auth-jwt") {
+        securityScheme("authJWT") {
             type = AuthType.HTTP
             scheme = AuthScheme.BEARER
             bearerFormat = "jwt"
         }
-        defaultSecuritySchemeName = "auth-jwt"
+        defaultSecuritySchemeName = "authJWT"
         schemasInComponentSection = true
         examplesInComponentSection = true
         defaultUnauthorizedResponse {

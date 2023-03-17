@@ -68,7 +68,7 @@ fun Routing.userRoute() {
         )
     }
 
-    authenticate("auth-jwt") {
+    authenticate("authJWT") {
         route("/user") {
             get(
                 "/hello",

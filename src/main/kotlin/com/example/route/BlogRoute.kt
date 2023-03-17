@@ -19,7 +19,7 @@ data class BlogRequest(val title: String,val description:String)
 data class BlogUpdateRequest(val blogId: Int, val title: String,val description:String)
 
 fun Routing.blogRoutes() {
-    authenticate("auth-jwt") {
+    authenticate("authJWT") {
         route("/blog") {
             get(
                 {
