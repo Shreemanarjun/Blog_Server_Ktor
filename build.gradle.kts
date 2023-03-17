@@ -31,7 +31,7 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jwt-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-cors-jvm:$ktor_version")
     implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
-    implementation ("io.github.smiley4:ktor-swagger-ui:1.2.0")
+    implementation ("io.github.smiley4:ktor-swagger-ui:1.3.2")
     implementation("org.slf4j:slf4j-simple:2.0.6")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")

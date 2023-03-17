@@ -69,7 +69,6 @@ fun Application.configureSwagger() {
         }
         defaultSecuritySchemeName = "auth-jwt"
         schemasInComponentSection = true
-        schemasInComponentSection = true
         examplesInComponentSection = true
         defaultUnauthorizedResponse {
             description = "Unauthorized Access"
