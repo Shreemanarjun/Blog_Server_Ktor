@@ -4,6 +4,9 @@ Blog app backend *REST API* is built with **Ktor** framework with **H2** as data
 Currently the api is deployed on *web-production-147b.up.railway.app [link](https://web-production-147b.up.railway.app)*
 
 📄 [Visit the documentation of this project](https://web-production-147b.up.railway.app/swagger/index.html) (Swagger/OpenAPI) to get more information in detail.
+## Deploy To Railway
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/pJaxUF?referralCode=lanL14)
+- You can use this link to deploy your instance at railway (https://railway.app/template/pJaxUF?referralCode=lanL14)
 
 ## Features
 - Easy structure
