@@ -30,7 +30,7 @@ fun Application.configureCORS() {
             allowHost(envHost, schemes = listOf("http", "https"))
             hosts.add(url)
         }
-        allowHost("https://shreemanarjun.github.io/")
+        allowHost("shreemanarjun.github.io",schemes = listOf("http", "https"))
 
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
