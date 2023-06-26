@@ -2,10 +2,7 @@ package com.example.plugins
 
 import com.example.data.ErrorMessage
 import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.dsl.AuthScheme
-import io.github.smiley4.ktorswaggerui.dsl.AuthType
-import io.github.smiley4.ktorswaggerui.dsl.SwaggerUiSort
-import io.github.smiley4.ktorswaggerui.dsl.SwaggerUiSyntaxHighlight
+import io.github.smiley4.ktorswaggerui.dsl.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 
@@ -66,6 +63,8 @@ fun Application.configureSwagger() {
             type = AuthType.API_KEY
             scheme = AuthScheme.BEARER
             bearerFormat = "jwt"
+            location=AuthKeyLocation.QUERY
+
         }
         defaultSecuritySchemeName = "authJWT"
       
