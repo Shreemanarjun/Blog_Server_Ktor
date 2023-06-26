@@ -68,8 +68,7 @@ fun Application.configureSwagger() {
             bearerFormat = "jwt"
         }
         defaultSecuritySchemeName = "authJWT"
-        schemasInComponentSection = true
-        examplesInComponentSection = true
+      
         defaultUnauthorizedResponse {
             description = "Unauthorized Access"
             body<ErrorMessage> {
