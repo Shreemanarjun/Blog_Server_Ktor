@@ -63,7 +63,7 @@ fun Application.configureSwagger() {
             type = AuthType.API_KEY
             scheme = AuthScheme.BEARER
             bearerFormat = "jwt"
-            location=AuthKeyLocation.QUERY
+            location=AuthKeyLocation.HEADER
 
         }
         defaultSecuritySchemeName = "authJWT"
