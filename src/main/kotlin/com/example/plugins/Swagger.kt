@@ -27,7 +27,7 @@ fun Application.configureSwagger() {
         }
         info {
             title = "Api"
-            version = "latest"
+            version = "v1.2"
             description = "My Api"
             termsOfService = "http://example.com/terms"
             contact {
